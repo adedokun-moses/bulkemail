@@ -1,5 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import HomeView from '../views/index.vue'
 
 const routes = [
   {
@@ -10,16 +10,53 @@ const routes = [
   {
     path: '/about',
     name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+  },
+  {
+    path: '/dash',
+    name: 'homepage',
+    component: () => import(/* webpackChunkName: "about" */ '../views/home.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/mails',
+    name: 'mails',
+    component: () => import(/* webpackChunkName: "about" */ '../views/mails.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/groups',
+    name: 'groups',
+    component: () => import(/* webpackChunkName: "about" */ '../views/groups.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/profiles',
+    name: 'profiles',
+    component: () => import(/* webpackChunkName: "about" */ '../views/profiles.vue'),
+    meta: { requiresAuth: true }
   }
 ]
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHashHistory(process.env.BASE_URL),
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return { top: 0 }
+    }
+  },
   routes
+})
+router.beforeEach((to) => {
+  if (to.meta.requiresAuth && !sessionStorage.getItem("token")) {
+    sessionStorage.clear()
+    return {
+      name: "home",
+      query: { redirect: to.fullPath },
+    }
+  }
 })
 
 export default router

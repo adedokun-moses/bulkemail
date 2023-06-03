@@ -1,14 +1,15 @@
 import { createStore } from 'vuex'
+import signModule from './log'
+import mailModule from './mails'
+import smsModule from './sms'
+import contactModule from './contact'
 
 export default createStore({
-  state: {
-  },
-  getters: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
   modules: {
+      signModule: signModule,
+      mailModule: mailModule,
+      smsModule: smsModule,
+      contactModule: contactModule
+     
   }
 })
