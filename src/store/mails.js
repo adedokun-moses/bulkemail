@@ -12,6 +12,7 @@ const mail = {
         baseUrl: process.env.VUE_APP_MOREPLEX_API ? process.env.VUE_APP_MOREPLEX_API : "",
         token: JSON.parse(sessionStorage.getItem("token")),
         email_groups: [],
+        mail_list: [],
         loading: false
 
     },
@@ -60,7 +61,7 @@ const mail = {
         },
         EDIT_EMAIL_GROUP(state, params) {
             axios
-                .post(state.baseUrl + "api/user_auth/new_emails_group_text", params, {
+                .post(state.baseUrl + "api/user_auth/add_emails_group_text", params, {
                     headers: { Authorization: `Bearer ${state.token}` },
                 })
                 .then((res) => {
@@ -99,6 +100,35 @@ const mail = {
         },
         ADD_EMAIL_GROUP_CSV(state, params) {
             axios
+                .post(state.baseUrl + "api/user_auth/new_emails_group_csv", params, {
+                    headers: { Authorization: `Bearer ${state.token}` },
+                })
+                .then((res) => {
+                    // console.log(res)
+                    if (res.data.status == 'success') {
+                        Swal.fire({
+                            title: "Good job!",
+                            text: res.data.message,
+                            icon: "success",
+                        });
+                        router.go('/dash')
+                    } else {
+                        Swal.fire({
+                            title: "Error!",
+                            text: res.data.message,
+                            icon: "error",
+                        });
+                        //  console.log(res.data)
+                    }
+                })
+                .catch((error) => {
+                    if (error.res) {
+                        console.log(error.res.data);
+                    }
+                });
+        },
+        EDIT_EMAIL_GROUP_CSV(state, params) {
+            axios
                 .post(state.baseUrl + "api/user_auth/add_emails_group_csv", params, {
                     headers: { Authorization: `Bearer ${state.token}` },
                 })
@@ -126,10 +156,18 @@ const mail = {
                     }
                 });
         },
-        setLoading(state, isLoading) {
-            state.loading = isLoading;
-        }
-
+    
+        EMAIL_LIST(state, id) {
+            axios
+                .get(state.baseUrl + "api/user_auth/group_email_list/" + id, {
+                    headers: { Authorization: `Bearer ${state.token}` },
+                }).then((res) => {
+                    state.mail_list = res.data.group_email_list;
+                    console.log(state.mail_list)
+                }).catch((err) => {
+                    console.log(err)
+              })
+        },
 
 
     },
@@ -149,9 +187,12 @@ const mail = {
         async editEmail({ commit }, params) {
             await commit('EDIT_EMAIL_GROUP', params)
         },
-
-
-
+        async editEmailCSV({ commit }, params) {
+            await commit('EDIT_EMAIL_GROUP_CSV', params)
+        },
+        async emaillist({ commit }, id) {
+            await commit('EMAIL_LIST', id)
+        },
     }
 }
 

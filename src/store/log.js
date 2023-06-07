@@ -5,6 +5,7 @@ const signin = {
     state: {
         baseUrl: process.env.VUE_APP_MOREPLEX_API ? process.env.VUE_APP_MOREPLEX_API : "",
         token: JSON.parse(sessionStorage.getItem("token")),
+        uername: JSON.parse(sessionStorage.getItem("fullname")),
         email: "",
         password: ""
     },
@@ -24,16 +25,14 @@ const signin = {
 
                         });
                     } else {
-                        // alert("working")
-                        //console(res.data)
                         sessionStorage.setItem("token", JSON.stringify(res.data.token));
-                        //  sessionStorage.setItem("user_id", JSON.stringify(res.data.user.id));
-                        // sessionStorage.setItem("profile_code", JSON.stringify(res.data.user.profile_code));
+                        sessionStorage.setItem("fullname", JSON.stringify(res.data.user.fullname));
+                        sessionStorage.setItem("email", JSON.stringify(res.data.user.email));
                         router.push("/dash");
                         Swal.fire({
                             title: "Success",
                             text: res.data.message,
-                            icon: "error",
+                            icon: "success",
 
                         });
                         setTimeout(function () {

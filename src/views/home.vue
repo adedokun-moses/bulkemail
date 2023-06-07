@@ -304,4 +304,26 @@ span {
     outline: none;
 }
 
+@media only screen and (max-width: 600px) {
+    .design_plat {
+    flex-direction: column;
+
+}
+
+.design_plat>div {
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    height: 130px;
+    margin: 0px 10px;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+}
+.table_head{
+    display: none;
+}
+
+}
+
 </style>

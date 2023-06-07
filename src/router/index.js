@@ -25,6 +25,12 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
+    path: '/mailsdet/:id',
+    name: 'mailsdet',
+    component: () => import(/* webpackChunkName: "about" */ '../views/mailsdet.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
     path: '/groups',
     name: 'groups',
     component: () => import(/* webpackChunkName: "about" */ '../views/groups.vue'),

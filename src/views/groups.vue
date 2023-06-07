@@ -49,64 +49,69 @@
 
                             </div>
 
-                            <div class="col-sm-12">
+                            <div class="col-sm-12 group_tab">
                                 <div class="row mt-5">
-                                   
-                                            <div class="col-sm-4 " v-for="mails in mail_groups" :key="mails.group_name">
-                                                <div class="row">
-                                                    <section class="movie_display col-sm-11  mx-auto">
+                                    <div v-show="mail_groups.length == 0" class="loader">
+                                        <loader/>
+                                    </div>
+                                    <div class="col-sm-4 " v-for="mails in mail_groups" :key="mails.group_name"
+                                        v-show="mail_groups.length != 0">
+                                        <div class="row">
+                                            <section class="movie_display col-sm-11  mx-auto">
 
-                                                        <div class="content">
-                                                            <div>
-                                                                <h5>Group Name <br>{{ mails.group_name }} </h5>
-                                                            </div>
-                                                            <div>
-                                                                <h5>{{ mails.group_email_adrs }} </h5>
-                                                            </div>
-                                                        </div>
+                                                <div class="content">
+                                                    <div>
+                                                        <h5>Group Name <br>{{ mails.group_name }} </h5>
+                                                    </div>
+                                                    <div>
+                                                        <h5>{{ mails.group_email_adrs }} </h5>
+                                                    </div>
+                                                </div>
 
-                                                        <div class="image_tab">
-                                                            <div>
-                                                                <editmailtext :mails="mails" />
-                                                            </div>
-                                                            <div>
-                                                                <button data-bs-toggle="modal"
-                                                                    data-bs-target="#exampleModal"><i
-                                                                        class="fa fa-plus-circle"></i>
-                                                                    SMS
-                                                                </button>
-                                                                <!-- Modal -->
-                                                                <div class="modal fade" id="exampleModal" tabindex="-1"
-                                                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                                    <div class="modal-dialog">
-                                                                        <div class="modal-content">
-                                                                            <div class="modal-header">
-                                                                                <h5 class="modal-title text-center"
-                                                                                    id="exampleModalLabel">New
-                                                                                    Message
-                                                                                </h5>
-                                                                                <button type="button" class="btn-close"
-                                                                                    data-bs-dismiss="modal"
-                                                                                    aria-label="Close"></button>
-                                                                            </div>
-                                                                            <div class="modal-body"
-                                                                                style="width: 100% !important; height: 80vh; overflow: scroll;">
-                                                                                <form_tab />
-                                                                            </div>
-                                                                        </div>
+                                                <div class="image_tab">
+                                                    <div>
+                                                        <editmailtext :mails="mails" />
+                                                    </div>
+                                                    <div>
+                                                        <button data-bs-toggle="modal" data-bs-target="#exampleModal"><i
+                                                                class="fa fa-plus-circle"></i>
+                                                            SMS
+                                                        </button>
+                                                        <!-- Modal -->
+                                                        <div class="modal fade" id="exampleModal" tabindex="-1"
+                                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title text-center"
+                                                                            id="exampleModalLabel">New
+                                                                            Message
+                                                                        </h5>
+                                                                        <button type="button" class="btn-close"
+                                                                            data-bs-dismiss="modal"
+                                                                            aria-label="Close"></button>
+                                                                    </div>
+                                                                    <div class="modal-body"
+                                                                        style="width: 100% !important; height: 80vh; overflow: scroll;">
+                                                                        <form_tab />
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div>
-                                                                <button><i class="fa fa-trash ml-5"></i>
-                                                                    Delete</button>
-                                                            </div>
-
                                                         </div>
-                                                    </section>
+                                                    </div>
+                                                    <div>
+                                                        <button><i class="fa fa-trash ml-5"></i>
+                                                            Delete</button>
+                                                    </div>
+
                                                 </div>
-                                            </div>
-                                       
+                                            </section>
+
+                                        </div>
+
+                                    </div>
+
+                                    <!--   <InfiniteLoading @infinite="mail_groups" /> -->
                                 </div>
 
                                 <!--       <main class="mt-5">
@@ -289,9 +294,15 @@ import sidenav from '../components/sidenav.vue';
 import form_tab from '../components/form.vue';
 import mail_import from '../components/mailimport.vue';
 import mail_text_import from '../components/mailimporttext.vue';
-import editmailtext from '../components/editmailtext.vue';/* 
-import phoneimport from '../components/phonetext.vue'; */
+import editmailtext from '../components/editmailtext.vue';
+import loader from '../components/loader.vue'
+
+/* 
+import phoneimport from '../components/phonetext.vue'; *//* 
+import InfiniteLoading from "v3-infinite-loading";
+import "v3-infinite-loading/lib/style.css"; */
 import { computed, onMounted } from 'vue';
+const loading = () => ref(true)
 import { useStore } from 'vuex'
 const store = useStore()
 
@@ -313,6 +324,18 @@ onMounted(() => {
     justify-content: space-between;
 }
 
+.group_tab {
+    /* background: yellow; */
+    height: 400px;
+    overflow: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    -ms-overflow-style: none !important;
+}
+.group_tab::-webkit-scrollbar {
+    display: none;
+}
+
 .movie_display {
     height: 120px;
     overflow: hidden;
@@ -320,19 +343,6 @@ onMounted(() => {
     border: 1px solid gold;
     margin: 5px 0px;
 }
-
-.tab-content {
-    height: 52vh;
-    overflow: scroll;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-    -ms-overflow-style: none !important;
-}
-
-.tab-content::-webkit-scrollbar {
-    display: none;
-}
-
 .image_tab {
     height: 60px;
     overflow: hidden;
@@ -340,7 +350,6 @@ onMounted(() => {
     align-items: center;
 
 }
-
 .content {
     display: flex;
     align-items: center;
@@ -352,7 +361,6 @@ onMounted(() => {
     width: 100%;
     margin: 28px 0px 0px 5px;
 }
-
 .image_tab button {
     width: 100%;
     background: grey;
@@ -361,8 +369,6 @@ onMounted(() => {
     border-radius: 2px;
 
 }
-
-
 .design_plat {
     justify-content: space-between;
     display: flex;
@@ -395,4 +401,5 @@ onMounted(() => {
     padding: 15px;
     text-align: center;
 }
+
 </style>

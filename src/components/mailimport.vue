@@ -18,7 +18,7 @@
                 {{ text }}
               </label>
               <label class="mt-2"> Group Name </label>
-              <input type="text" placeholder="Group Name" class="form-control mt-3" style="border-radius: 10px;" v-model="email_group_id">
+              <input type="text" placeholder="Group Name" class="form-control mt-3" style="border-radius: 10px;" v-model="email_group_name">
   
               <button @click="submitFile" class="mt-4 button_import" >
                 <i :class="loader"></i> {{ msg }}
@@ -34,7 +34,6 @@
   <script>
   
   export default {
-    props: ['channel_id'],
     data() {
       return {
         modal: false,
@@ -44,7 +43,7 @@
         isDragging: false,
         text: "",
         date: "",
-        email_group_id: ""
+        email_group_name: ""
   
       }
     },
@@ -65,7 +64,7 @@
       onChange() {
         // this.files = [...this.$refs.file.files];
         this.Images = this.$refs.email_file.files[0];
-        this.text = this.$refs.email_file.files[0]
+        this.text = this.$refs.email_file.files[0].name
         console.log(this.text)
       },
       dragover(e) {
@@ -87,7 +86,7 @@
           this.loader = "fa fa-spinner fa-spin";
           const params = new FormData();
           params.append("email_file", this.Images);
-          params.append("email_group_id", this.email_group_id);
+          params.append("email_group_name", this.email_group_name);
           this.$store.dispatch("addEmailCSV", params);
         }
       },
@@ -169,23 +168,7 @@
     text-decoration: none;
     cursor: pointer;
   }
-  
-  .file-upload-wrapper {
-    width: auto;
-    margin: auto;
-    color: red;
-  }
-  
-  .file-upload-wrapper button {
-    border: 2px solid red;
-    margin: 10px 0px;
-  }
-  
-  .file-upload-wrapper button:hover {
-    color: black;
-    background: rgb(211, 134, 134);
-  }
-  
+
   .dropzone-container {
     padding: 0rem;
     color: black;
@@ -212,39 +195,15 @@
     border: 2px solid grey;
   }
   
-  .preview-container {
-    display: flex;
-    margin-top: 0rem;
-  }
-  
-  .preview-card {
-    display: flex;
-    border: 1px solid #a2a2a2;
-    padding: 5px;
-    border-radius: 20px;
-    height: 200px;
-    overflow: hidden;
-    background: red;
-  }
-  
-  .preview-img {
-    width: 100%;
-    border-radius: 5px;
-    border-radius: 10px;
-  }
-  
   .button_import {
     display: block;
     margin: 10px auto;
     width: 50%;
   }
   
-  .formgroup input {
-    width: 100%;
+  input:focus {
+    box-shadow: none;
     outline: none;
-    margin: 10px 0px;
-    border-radius: 10px;
-    padding: 10px;
   }
   </style>
   

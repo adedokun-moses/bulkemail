@@ -21,17 +21,20 @@
         </div>
         <div class="row">
             <div class="col-12 mt-2 subject">
-                <textarea name="" id="" cols="100" rows="10" placeholder="Message" v-model="message_body"></textarea>
+                <label >Body</label>
+             
+                <textarea name="" id="" cols="100" rows="10" placeholder="Message" v-model="message_body"></textarea> 
+           <!--      <QuillEditor theme="snow" v-model="message_body" /> -->
             </div>
         </div>
-        <div class="row">
+      <!--   <div class="row">
             <div class="col-12 mt-2">
                 <input type="file">
             </div>
-        </div>
+        </div> -->
 
         <div class="row">
-            <div class="col-12 mt-2 subject">
+            <div class="col-12 mt-5 subject">
                 <button class="mt-4" @click.prevent="sendMail()">{{ msg }} </button>
             </div>
         </div>
@@ -39,7 +42,10 @@
 </template>
 <script setup>
 import { computed, onMounted, ref } from 'vue';
-import { useStore } from 'vuex'
+import { useStore } from 'vuex';
+import { QuillEditor } from '@vueup/vue-quill'
+import '@vueup/vue-quill/dist/vue-quill.snow.css';
+
 const store = useStore()
 const mail_groups = computed(() => {
     return store.state.mailModule.email_groups;
@@ -61,8 +67,8 @@ const sendMail = () => {
     params.append("email_group_id", email_group_id.value);
     params.append("message_title", message_title.value);
     params.append("message_body", message_body.value);
-//    console.log(params)
-    store.dispatch("sendEmail", params);
+   console.log(message_body.value)
+   store.dispatch("sendEmail", params);
 }
 
 </script>

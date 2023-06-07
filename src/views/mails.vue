@@ -27,7 +27,7 @@
                                 </div>
 
 
-                              <!--   <div class=" design_tab ">
+                                <!--   <div class=" design_tab ">
                                     <h5> Import New <br> Emails <span style="color:  #989898; "><br>
                                         </span></h5>
                                     <div class="mt-3 ">
@@ -78,73 +78,31 @@
 
                                 <table class="table mt-4">
                                     <thead>
-                                        <th><input type="checkbox"></th>
-                                        <th>
-                                            <div class="pull-left">
-                                                <span style="padding-right: 8px !important">Time</span>
-                                                <div class='icon-container'>
-                                                    <i class="fa fa-caret-up pull-right" aria-hidden="true"></i>
-                                                    <i class="fa fa-caret-down pull-right" aria-hidden="true"></i>
-                                                </div>
-                                            </div>
-                                        </th>
-
-                                        <th>
-                                            <div class="pull-left">
-                                                <span style="padding-right: 8px !important">From</span>
-                                                <div class='icon-container'>
-                                                    <i class="fa fa-caret-up pull-right" aria-hidden="true"></i>
-                                                    <i class="fa fa-caret-down pull-right" aria-hidden="true"></i>
-                                                </div>
-                                            </div>
-                                        </th>
-                                        <th>
-                                            <div class="pull-left">
-                                                <span style="padding-right: 8px !important">To</span>
-                                                <div class='icon-container'>
-                                                    <i class="fa fa-caret-up pull-right" aria-hidden="true"></i>
-                                                    <i class="fa fa-caret-down pull-right" aria-hidden="true"></i>
-                                                </div>
-                                            </div>
-                                        </th>
-                                        <th>
-                                            <div class="pull-left">
-                                                <span style="padding-right: 8px !important">Type</span>
-                                                <div class='icon-container'>
-                                                    <i class="fa fa-caret-up pull-right" aria-hidden="true"></i>
-                                                    <i class="fa fa-caret-down pull-right" aria-hidden="true"></i>
-                                                </div>
-                                            </div>
-                                        </th>
-                                        <th>
-                                            <div class="pull-left">
-                                                <span style="padding-right: 8px !important">Status</span>
-                                                <div class='icon-container'>
-                                                    <i class="fa fa-caret-up pull-right" aria-hidden="true"></i>
-                                                    <i class="fa fa-caret-down pull-right" aria-hidden="true"></i>
-                                                </div>
-                                            </div>
-                                        </th>
-                                        <th>
-                                            <div class="pull-left">
-                                                <span style="padding-right: 8px !important">Action</span>
-                                                <div class='icon-container'>
-                                                    <i class="fa fa-caret-up pull-right" aria-hidden="true"></i>
-                                                    <i class="fa fa-caret-down pull-right" aria-hidden="true"></i>
-                                                </div>
-                                            </div>
-                                        </th>
+                                        <th> Group Name </th>
+                                        <th>Messages Sent </th>
+                                        <th>No. Of Mails </th>
+                                        <th colspan="2" style="text-align: center;"> Action </th>
                                     </thead>
-                                    <tbody style="margin-top: 200px !important;">
-                                        <tr>
-                                            <td><input type="checkbox"></td>
-                                            <td>17th, May 2022. 9:46am</td>
-                                            <td>98228391912</td>
-                                            <td>98228391912 +250 more</td>
-                                            <td>Email, SMS</td>
-                                            <td>Delivered</td>
-                                            <td><i class="fa fa-trash"></i> <i class="fa fa-edit"
-                                                    style="padding-left: 10px !important;"></i></td>
+
+                                    <tbody>
+                                        <tr v-show="mail_groups.length == 0" class="loader">
+                                            <loader />
+                                        </tr>
+                                        <tr v-for="mails in mail_groups" :key="mails.id" v-show="mail_groups.length != 0">
+                                            <td>{{ mails.group_name }}</td>
+                                            <td>{{ mails.group_messages }}</td>
+                                            <td>{{ mails.group_email_adrs }}</td>
+                                            <td class="edit_btn" @click="procedtoMailDet(mails.group_id)">
+                                                
+                                                <button class="btn"><i class="fa fa-eye"
+                                                        style="padding-left: 10px !important;"></i> View
+                                                    Mails</button>
+                                            </td>
+                                            <td>
+                                                <button class="btn">
+                                                    <editmailtext :mails="mails" />
+                                                </button>
+                                            </td>
                                         </tr>
                                     </tbody>
 
@@ -163,15 +121,24 @@
 </template>
 
 <script setup>
-import sidenav from '../components/sidenav.vue';/* 
-import form_tab from '../components/form.vue'; */
+import sidenav from '../components/sidenav.vue';
 import mail_import from '../components/mailimport.vue';
 import mail_text_import from '../components/mailimporttext.vue';
-import { useRouter } from 'vue-router';
-const router = useRouter();
-const group_push = () => {
-    router.push('/groups')
-};
+import editmailtext from '../components/editmailtext.vue';
+import loader from '../components/loader.vue';
+import router from '@/router';
+import { computed } from 'vue';
+import { useStore } from 'vuex'
+const store = useStore()
+
+const mail_groups = computed(() => {
+    return store.state.mailModule.email_groups;
+});
+const procedtoMailDet = (id) =>{  
+    router.push("/mailsdet/" + id)
+}
+ 
+
 
 
 </script>
@@ -253,53 +220,17 @@ const group_push = () => {
     align-content: center;
 }
 
-.pull-left {
-    display: flex;
-    align-items: center;
-}
 
-span {
-    padding-top: 0px;
-}
 
 .main_table {
     height: 60vh;
     overflow: scroll;
     -ms-overflow-style: none !important;
     overflow: -moz-scrollbars-none;
-
 }
 
 .main_table::-webkit-scrollbar {
     display: none;
-}
-
-.table_head {
-    display: flex;
-    justify-content: space-between;
-    box-shadow: 1px 1px #888888;
-    background: #989898;
-    padding: 5px 2px;
-    border-radius: 3px;
-
-}
-
-.table_head>div {
-    align-items: center;
-}
-
-.table_head button {
-    margin: 0px 10px !important;
-    padding: 10px 25px !important;
-    outline: none;
-    border: none;
-    border-radius: 10px;
-}
-
-.filter_box input {
-    padding: 8px 10px !important;
-    border-radius: 5px;
-    outline: none;
 }
 
 .design_tab button {
@@ -308,5 +239,13 @@ span {
     border: none;
     padding: 20px;
     border-radius: 20px;
+}
+
+/* .edit_btn button {
+    margin: 0px 10px;
+} */
+
+.edit_btn button:focus {
+    box-shadow: none;
 }
 </style>
