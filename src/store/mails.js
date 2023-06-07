@@ -15,7 +15,8 @@ const mail = {
         mail_list: [],
         messagelist: [],
         loading: false,
-        group_name: ""
+        group_name: "",
+        report: []
 
     },
 
@@ -26,7 +27,7 @@ const mail = {
                     headers: { Authorization: `Bearer ${state.token}` },
                 }).then((res) => {
                     state.email_groups = res.data.group_email_list;
-                    console.log(state.email_groups)
+                    //  console.log(state.email_groups)
                 }).catch((err) => {
                     console.log(err)
                 })
@@ -74,7 +75,7 @@ const mail = {
                             text: res.data.message,
                             icon: "success",
                         });
-                        router.go('/dash')
+                        router.go('/groups')
                     } else {
                         Swal.fire({
                             title: "Good job!",
@@ -101,7 +102,7 @@ const mail = {
                         text: res.data.message,
                         icon: "success",
                     });
-                   // router.go('/dash')
+                    router.go('/groups')
                 } else {
                     Swal.fire({
                         title: "Error!",
@@ -179,54 +180,116 @@ const mail = {
                     headers: { Authorization: `Bearer ${state.token}` },
                 }).then((res) => {
                     state.mail_list = res.data.group_email_list;
-                    console.log(state.mail_list)
-                }).catch((err) => {
-                    console.log(err)
-                })
-        },
-
-        MESSAGE_LIST(state, id) {
-            axios
-                .get(state.baseUrl + "api/user_auth/email_group_messages/" + id, {
-                    headers: { Authorization: `Bearer ${state.token}` },
-                }).then((res) => {
-                    state.messagelist = res.data.group_email_message;
-                    state.group_name = res.data.group_email_name
-                    console.log(state.mail_list)
-                }).catch((err) => {
-                    console.log(err)
-                })
-        },
-
-
-
-
+                    if (res.data.status == 'success') {
+                        Swal.fire({
+                            title: "Good job!",
+                            text: res.data.message,
+                            icon: "success",
+                        });
+                        router.go('/dash')
+                    } else {
+                        Swal.fire({
+                            title: "Error!",
+                            text: res.data.message,
+                            icon: "error",
+                        });
+                        //  console.log(res.data)
+                    }
+           
+            // console.log(state.mail_list)
+        }).catch((err) => {
+            console.log(err)
+        })
     },
+
+    MESSAGE_LIST(state, id) {
+        axios
+            .get(state.baseUrl + "api/user_auth/email_group_messages/" + id, {
+                headers: { Authorization: `Bearer ${state.token}` },
+            }).then((res) => {
+                state.messagelist = res.data.group_email_message;
+                state.group_name = res.data.group_email_name
+                //  console.log(state.mail_list)
+            }).catch((err) => {
+                console.log(err)
+            })
+    },
+    REPORT_DET(state) {
+        axios
+            .get(state.baseUrl + "api/user_auth/report", {
+                headers: { Authorization: `Bearer ${state.token}` },
+            }).then((res) => {
+                state.report = res.data.reports;
+                console.log(state.report)
+            }).catch((err) => {
+                console.log(err)
+            })
+    },
+    DELETE_GRP(state, id) {
+        axios
+            .delete(state.baseUrl + "api/user_auth/delete_group/" + id, {
+                headers: { Authorization: `Bearer ${state.token}` },
+            }).then((res) => {
+                if (res.data.status == 'success') {
+                    Swal.fire({
+                        title: "Good job!",
+                        text: res.data.message,
+                        icon: "success",
+                    });
+                    console.log(res.data.message)
+                    router.go('/groups')
+                } else {
+                    Swal.fire({
+                        title: "Error!",
+                        text: res.data.message,
+                        icon: "error",
+                    });
+                    console.log(res.data.message)
+                    //  console.log(res.data)
+                }
+                
+            }).catch((err) => {
+                console.log(err)
+            })
+    },
+
+
+
+
+
+
+},
     actions: {
         async fetchAllGroups({ commit }) {
             await commit('FETCH_ALL_GROUPS')
         },
         async addEmail({ commit }, params) {
-            await commit('ADD_EMAIL_GROUP', params)
-        },
+    await commit('ADD_EMAIL_GROUP', params)
+},
         async addEmailCSV({ commit }, params) {
-            await commit('ADD_EMAIL_GROUP_CSV', params)
-        },
+    await commit('ADD_EMAIL_GROUP_CSV', params)
+},
         async sendEmail({ commit }, params) {
-            await commit('SEND_BULK_EMAIL', params)
-        },
+    await commit('SEND_BULK_EMAIL', params)
+},
         async editEmail({ commit }, params) {
-            await commit('EDIT_EMAIL_GROUP', params)
-        },
+    await commit('EDIT_EMAIL_GROUP', params)
+},
         async editEmailCSV({ commit }, params) {
-            await commit('EDIT_EMAIL_GROUP_CSV', params)
-        },
+    await commit('EDIT_EMAIL_GROUP_CSV', params)
+},
         async emaillist({ commit }, id) {
-            await commit('EMAIL_LIST', id)
-        },
+    await commit('EMAIL_LIST', id)
+},
         async messagelist({ commit }, id) {
-            await commit('MESSAGE_LIST', id)
-        },
+    await commit('MESSAGE_LIST', id)
+},
+        async fetchReports({ commit }) {
+    await commit('REPORT_DET')
+},
+        async deletegrp({ commit }, id) {
+    await commit('DELETE_GRP', id)
+},
     }
 }
 

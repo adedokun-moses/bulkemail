@@ -8,18 +8,20 @@
             <form>
                 <div class="input ">
                     <div class="hidden"><label for="subject" class=" mb-2">Subject</label></div>
-                    <div class="icon-container"><input type="text" name="subject" id="subject" placeholder="Subject" v-model="message_title"
-                            class="icon-content" required><span class="fas fa-pencil-alt icon"></span></div>
+                    <div class="icon-container"><input type="text" name="subject" id="subject" placeholder="Subject"
+                            v-model="message_title" class="icon-content" required><span
+                            class="fas fa-pencil-alt icon"></span></div>
                 </div>
 
                 <div class="input ">
                     <div class="hidden"><label for="message" class="mb-2">Message</label></div>
-                    <div class="icon-container"><textarea name="message" id="message" cols="100" rows="12"  v-model="message_body"
+                    <editor v-model="message_body" :init="editorConfig"></editor>
+                    <!--  <div class="icon-container"><textarea name="message" id="message" cols="100" rows="12"  v-model="message_body"
                             placeholder="Message..." class="icon-content" required></textarea><span
-                            class="fas fa-quote-left icon"></span></div>
+                            class="fas fa-quote-left icon"></span></div> -->
                 </div>
 
-             
+
 
                 <div class="row">
                     <div class="col-12 subject mt-5">
@@ -37,7 +39,9 @@
     
 <script>
 
+import Editor from '@tinymce/tinymce-vue';
 export default {
+    components: { Editor },
     props: ["mails"],
     data() {
         return {
@@ -74,6 +78,41 @@ export default {
             // alert(this.group_name)
             this.$store.dispatch("sendEmail", params);
         },
+        editorConfig() {
+            height = 500,
+                plugins = 'link image',
+                toolbar = 'undo redo | formatselect | bold italic | alignleft aligncenter alignright | link image',
+                images_upload_handler = uploadImage
+        },
+        uploadImage(blobInfo) {
+            return new Promise((resolve, reject) => {
+                const file = blobInfo.blob();
+                const reader = new FileReader();
+                reader.onload = () => {
+                    const base64Data = reader.result;
+                    resolve(base64Data);
+                };
+                reader.onerror = () => {
+                    reject('Image upload failed.');
+                };
+                reader.readAsDataURL(file);
+            });
+        },
+
+        handleImageUpload() {
+            const file = this.$refs.fileInput.files[0];
+            const blobInfo = { blob: () => file };
+            uploadImage(blobInfo)
+                .then((base64Data) => {
+                    const imageElement = `<img src="${base64Data}" alt="Uploaded Image" />`;
+                    const editor = tinymce.get('editor'); // Replace 'editor' with your editor instance ID
+                    editor.execCommand('mceInsertContent', false, imageElement);
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }
+
 
     },
 
@@ -120,7 +159,8 @@ button {
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
-    height: 100vh;
+    overflow: scroll;
+    height: 70vh;
 }
 
 .modal-content h5 {
@@ -150,46 +190,48 @@ button {
 /* Form */
 
 
-.input input, .input textarea {
-  width: 100%;
-  margin-bottom: 0.75em;
-  border: none !important;
-  outline: none !important;
+
+.input input,
+.input textarea {
+    width: 100%;
+    margin-bottom: 0.75em;
+    border: none !important;
+    outline: none !important;
 }
 
 .icon-container {
-  display: flex;
-  flex-direction: row-reverse;
-  flex-wrap: nowrap;
-  width: 100%;
+    display: flex;
+    flex-direction: row-reverse;
+    flex-wrap: nowrap;
+    width: 100%;
 }
 
 .icon {
-  background-color: #fff;
-  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
-  padding: 0.8em;
-  display: inline-block;
-  align-self: stretch;
-  color: #ddd;
-  transition: color 0.75s;
+    background-color: #fff;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+    padding: 0.8em;
+    display: inline-block;
+    align-self: stretch;
+    color: #ddd;
+    transition: color 0.75s;
 }
 
 .icon-content {
-  background-color: #fff;
-  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
-  padding: 0.8em;
-  width: 100%;
-  z-index: 2;
+    background-color: #fff;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+    padding: 0.8em;
+    width: 100%;
+    z-index: 2;
 }
+
 .icon-content:focus {
     border: none;
-  outline: 2px solid #f857a8;
-}
-.icon-content:focus ~ .icon {
-  color: #f857a8;
+    outline: 2px solid #f857a8;
 }
 
-
+.icon-content:focus~.icon {
+    color: #f857a8;
+}
 </style>
     
     

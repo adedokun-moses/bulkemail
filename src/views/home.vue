@@ -24,14 +24,14 @@
                         </div>
 
 
-                   <!--      <div class=" design_tab ">
+                        <!--      <div class=" design_tab ">
                             <h5> Import New <br> Contacts <span style="color:  #989898; "><br>
                                 </span></h5>
                             <div class="mt-3 ">
                                 <sms_import />
                             </div>
                         </div> -->
-                     <!--    <div class=" design_tab ">
+                        <!--    <div class=" design_tab ">
                             <h5> Import New <br> Emails <span style="color:  #989898; "><br>
                                 </span></h5>
                             <div class="mt-3 d-flex">
@@ -69,95 +69,15 @@
                             </div>
                         </div>
                     </div>
-                   
-                    <div class="col-sm-11 mx-auto">
+
+                    <div class="col-sm-11 mx-auto ">
                         <h5 class="mt-4"><b>Reports</b></h5>
-                        <div class="table_head d-flex mt-5">
-                            <div class="entries d-flex">
-                                <h5>Show Entries</h5>
-                                <button><i class="fa fa-cloud-upload"></i> Import</button>
-                                <button><i class="fa fa-download"></i> Export</button>
-                            </div>
-                            <div class="filter_box">
-                                <input type="text" placeholder="search">
-                                <button><i class="fa fa-import"></i> Filter</button>
-                                <button><i class="fa fa-import"></i> Action</button>
-                            </div>
+                        <div class="report_tab">
+                            <ul v-for="reportdet in reports" :key="reportdet.id">
+                                <li>{{ reportdet.report_message }}</li>
+                            </ul>
                         </div>
 
-                        <table class="table mt-4">
-                            <thead>
-                                <th><input type="checkbox"></th>
-                                <th>
-                                    <div class="pull-left">
-                                        <span style="padding-right: 8px !important">Time</span>
-                                        <div class='icon-container'>
-                                            <i class="fa fa-caret-up pull-right" aria-hidden="true"></i>
-                                            <i class="fa fa-caret-down pull-right" aria-hidden="true"></i>
-                                        </div>
-                                    </div>
-                                </th>
-
-                                <th>
-                                    <div class="pull-left">
-                                        <span style="padding-right: 8px !important">From</span>
-                                        <div class='icon-container'>
-                                            <i class="fa fa-caret-up pull-right" aria-hidden="true"></i>
-                                            <i class="fa fa-caret-down pull-right" aria-hidden="true"></i>
-                                        </div>
-                                    </div>
-                                </th>
-                                <th>
-                                    <div class="pull-left">
-                                        <span style="padding-right: 8px !important">To</span>
-                                        <div class='icon-container'>
-                                            <i class="fa fa-caret-up pull-right" aria-hidden="true"></i>
-                                            <i class="fa fa-caret-down pull-right" aria-hidden="true"></i>
-                                        </div>
-                                    </div>
-                                </th>
-                                <th>
-                                    <div class="pull-left">
-                                        <span style="padding-right: 8px !important">Type</span>
-                                        <div class='icon-container'>
-                                            <i class="fa fa-caret-up pull-right" aria-hidden="true"></i>
-                                            <i class="fa fa-caret-down pull-right" aria-hidden="true"></i>
-                                        </div>
-                                    </div>
-                                </th>
-                                <th>
-                                    <div class="pull-left">
-                                        <span style="padding-right: 8px !important">Status</span>
-                                        <div class='icon-container'>
-                                            <i class="fa fa-caret-up pull-right" aria-hidden="true"></i>
-                                            <i class="fa fa-caret-down pull-right" aria-hidden="true"></i>
-                                        </div>
-                                    </div>
-                                </th>
-                                <th>
-                                    <div class="pull-left">
-                                        <span style="padding-right: 8px !important">Action</span>
-                                        <div class='icon-container'>
-                                            <i class="fa fa-caret-up pull-right" aria-hidden="true"></i>
-                                            <i class="fa fa-caret-down pull-right" aria-hidden="true"></i>
-                                        </div>
-                                    </div>
-                                </th>
-                            </thead>
-                            <tbody style="margin-top: 200px !important;">
-                                <tr>
-                                    <td><input type="checkbox"></td>
-                                    <td>17th, May 2022. 9:46am</td>
-                                    <td>98228391912</td>
-                                    <td>98228391912 +250 more</td>
-                                    <td>Email, SMS</td>
-                                    <td>Delivered</td>
-                                    <td><i class="fa fa-trash"></i> <i class="fa fa-edit"
-                                            style="padding-left: 10px !important;"></i></td>
-                                </tr>
-                            </tbody>
-
-                        </table>
                     </div>
                 </div>
             </div>
@@ -180,10 +100,16 @@ const store = useStore()
 const mail_groups = computed(() => {
     return store.state.mailModule.email_groups;
 });
+
+const reports = computed(() => {
+    return store.state.mailModule.report;
+});
 const group_push = () => {
     router.push('/groups')
 };
-
+onMounted(() => {
+    store.dispatch('fetchReports');
+});
 
 </script>
 
@@ -226,6 +152,22 @@ const group_push = () => {
     display: none;
 }
 
+.report_tab {
+    height: 450px;
+    overflow: scroll;
+    overflow: -moz-scrollbars-none;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.report_tab::-webkit-scrollbar {
+    display: none;
+}
+
+.report_tab li {
+    list-style: none;
+}
+
 .icon-container {
     display: flex;
     flex-direction: column;
@@ -264,6 +206,7 @@ const group_push = () => {
     padding: 15px;
     text-align: center;
 }
+
 .design_tab button {
     margin: 35px;
     outline: none;
@@ -272,6 +215,7 @@ const group_push = () => {
     border-radius: 20px;
     width: 80%;
 }
+
 .pull-left {
     display: flex;
     align-items: center;
@@ -311,24 +255,23 @@ span {
 
 @media only screen and (max-width: 600px) {
     .design_plat {
-    flex-direction: column;
+        flex-direction: column;
 
-}
+    }
 
-.design_plat>div {
-    margin: 0px;
-    padding: 0px;
-    width: 100%;
-    height: 130px;
-    margin: 0px 10px;
-    background: #FFFFFF;
-    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.08);
-    border-radius: 12px;
-}
-.table_head{
-    display: none;
-}
+    .design_plat>div {
+        margin: 0px;
+        padding: 0px;
+        width: 100%;
+        height: 130px;
+        margin: 0px 10px;
+        background: #FFFFFF;
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.08);
+        border-radius: 12px;
+    }
 
-}
+    .table_head {
+        display: none;
+    }
 
-</style>
+}</style>

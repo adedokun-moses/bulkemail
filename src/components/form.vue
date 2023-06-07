@@ -16,7 +16,6 @@
         <div class="input">
             <div class="hidden"><label for="message" class=" mt-2 mb-2">Message</label></div>
             <editor v-model="message_body" :init="editorConfig"></editor>
-         <!--    <input type="file" ref="fileInput" @change="handleImageUpload"> -->
         </div>
 
         <!--    <div class="input ">
@@ -75,9 +74,6 @@ const editorConfig = {
       images_upload_handler: uploadImage,
     };
 
-/* function handleEditorChange() {
-    content.value = editor.getContent();
-} */
 function uploadImage(blobInfo) {
       return new Promise((resolve, reject) => {
         const file = blobInfo.blob();

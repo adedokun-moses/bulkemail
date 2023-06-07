@@ -76,7 +76,7 @@
                                                         <form_tab :mails="mails" />
                                                     </div>
                                                     <div>
-                                                        <button><i class="fa fa-trash ml-5"></i>
+                                                        <button @click="deleteGroup(mails.group_id)"><i class="fa fa-trash ml-5"></i>
                                                             Delete</button>
                                                     </div>
 
@@ -271,12 +271,10 @@ import form_tab from '../components/formtab.vue';
 import mail_import from '../components/mailimport.vue';
 import mail_text_import from '../components/mailimporttext.vue';
 import editmailtext from '../components/editmailtext.vue';
-import loader from '../components/loader.vue'
+import Swal from 'sweetalert2';
+import loader from '../components/loader.vue';
+import router from '@/router';
 
-/* 
-import phoneimport from '../components/phonetext.vue'; *//* 
-import InfiniteLoading from "v3-infinite-loading";
-import "v3-infinite-loading/lib/style.css"; */
 import { computed, onMounted } from 'vue';
 const loading = () => ref(true)
 import { useStore } from 'vuex'
@@ -285,7 +283,23 @@ const store = useStore()
 const mail_groups = computed(() => {
     return store.state.mailModule.email_groups;
 });
-
+const deleteGroup = (id) => {
+    Swal.fire({
+        text: "Do You Want To Delete",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes!!!!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+            store.dispatch("deletegrp", id);
+        }
+        else {
+          router.push('/groups')
+        }
+    })
+}
 onMounted(() => {
     store.dispatch('fetchAllGroups');
 });
