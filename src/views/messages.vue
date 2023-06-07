@@ -12,32 +12,35 @@
                     <div class="user_det">
                         <h5>Hello <b>{{ fullname }}</b>, Welcome</h5>
                         <p>You currently have <b>{{ group_email_message.length }}</b> messages sent in this group</p>
-                        <h3>Group Name: {{  group_name }}</h3>
+                        <h3>Group Name: {{ group_name }}</h3>
                     </div>
                 </div>
-            
-                <table class="table mt-4">
-                                    <thead>
-                                        <th>Message Sent </th>
-                                        <th>Time Sent</th>
-                                        <th>Status</th>
-                                       
-                                    </thead>
+                <div class="table_cont">
+                    <table class="table mt-4">
+                        <thead>
+                            <th>Message Sent </th>
+                            <th>Time Sent</th>
+                            <th>Status</th>
 
-                                    <tbody>
-                                        <tr v-show="group_email_message.length == 0" class="loader">
-                                            <loader />
-                                        </tr>
-                                        <tr v-for="mails in group_email_message" :key="mails.id" v-show="group_email_message.length != 0">
-                                            <td>{{ mails.message_body }}</td>
-                                            <td>{{ mails.created_at }}</td>
-                                            <td class="success">Successful</td>
-                                        </tr>
-                                      
-                                    </tbody>
+                        </thead>
 
-                                </table>
-           
+                        <tbody class="bodies">
+                            <tr v-show="group_email_message.length == 0" class="loader">
+                                <loader />
+                            </tr>
+                            <tr v-for="mails in group_email_message" :key="mails.id"
+                                v-show="group_email_message.length != 0">
+                                <td>{{ mails.message_body.substr(0, 10) }}</td>
+                                <td>{{ formatDateTime(mails.created_at) }}</td>
+                                <td class="success">Successful</td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+                </div>
+
+
 
             </div>
         </div>
@@ -58,7 +61,12 @@ const store = useStore()
 const group_email_message = computed(() => {
     return store.state.mailModule.messagelist;
 });
-
+const formatDateTime = (mails) => {
+    const date = new Date(mails);
+    const formattedDate = date.toLocaleDateString();
+    const formattedTime = date.toLocaleTimeString();
+    return `${formattedDate} ${formattedTime}`;
+};
 const group_name = computed(() => {
     return store.state.mailModule.group_name;
 });
@@ -83,22 +91,22 @@ onMounted(() => {
     font-size: 20px;
 }
 
-.mail_list_tab {
+.table {
     width: 80%;
     margin: auto;
-    height: 450px;
+    height: 10px !important;
+
+}
+
+.table_cont {
+    height: 450px !important;
     overflow: scroll;
     -ms-overflow-style: none;
     scrollbar-width: none;
     -ms-overflow-style: none !important;
 }
 
-.mail_list_tab::-webkit-scrollbar {
+.table_cont::-webkit-scrollbar {
     display: none;
 }
-
-.mail_list_tab h3 {
-    font-size: 15px;
-}
-
 </style>
