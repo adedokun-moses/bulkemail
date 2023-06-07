@@ -126,6 +126,7 @@
                 <router-link to="/mails">
                     <li><i class="fa fa-envelope-open" style="margin-right: 20px !important; "></i>Manage Mails</li>
                 </router-link>
+      
 
                 <router-link to="/profiles">
                     <li><i class="fas fa-user" style="margin-right: 20px !important; "></i>Edit Profile</li>

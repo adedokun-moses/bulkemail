@@ -13,7 +13,9 @@ const mail = {
         token: JSON.parse(sessionStorage.getItem("token")),
         email_groups: [],
         mail_list: [],
-        loading: false
+        messagelist: [],
+        loading: false,
+        group_name: ""
 
     },
 
@@ -93,7 +95,21 @@ const mail = {
             axios.post(state.baseUrl + "api/user_auth/sendBulkEmail", params, {
                 headers: { Authorization: `Bearer ${state.token}` },
             }).then((res) => {
-                console.log(res.data)
+                if (res.data.status == 'success') {
+                    Swal.fire({
+                        title: "Good job!",
+                        text: res.data.message,
+                        icon: "success",
+                    });
+                   // router.go('/dash')
+                } else {
+                    Swal.fire({
+                        title: "Error!",
+                        text: res.data.message,
+                        icon: "error",
+                    });
+                    //  console.log(res.data)
+                }
             }).catch((err) => {
                 console.log(err)
             })
@@ -156,7 +172,7 @@ const mail = {
                     }
                 });
         },
-    
+
         EMAIL_LIST(state, id) {
             axios
                 .get(state.baseUrl + "api/user_auth/group_email_list/" + id, {
@@ -166,8 +182,23 @@ const mail = {
                     console.log(state.mail_list)
                 }).catch((err) => {
                     console.log(err)
-              })
+                })
         },
+
+        MESSAGE_LIST(state, id) {
+            axios
+                .get(state.baseUrl + "api/user_auth/email_group_messages/" + id, {
+                    headers: { Authorization: `Bearer ${state.token}` },
+                }).then((res) => {
+                    state.messagelist = res.data.group_email_message;
+                    state.group_name = res.data.group_email_name
+                    console.log(state.mail_list)
+                }).catch((err) => {
+                    console.log(err)
+                })
+        },
+
+
 
 
     },
@@ -192,6 +223,9 @@ const mail = {
         },
         async emaillist({ commit }, id) {
             await commit('EMAIL_LIST', id)
+        },
+        async messagelist({ commit }, id) {
+            await commit('MESSAGE_LIST', id)
         },
     }
 }

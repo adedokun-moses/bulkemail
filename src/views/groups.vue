@@ -73,31 +73,7 @@
                                                         <editmailtext :mails="mails" />
                                                     </div>
                                                     <div>
-                                                        <button data-bs-toggle="modal" data-bs-target="#exampleModal"><i
-                                                                class="fa fa-plus-circle"></i>
-                                                            SMS
-                                                        </button>
-                                                        <!-- Modal -->
-                                                        <div class="modal fade" id="exampleModal" tabindex="-1"
-                                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                            <div class="modal-dialog">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title text-center"
-                                                                            id="exampleModalLabel">New
-                                                                            Message
-                                                                        </h5>
-                                                                        <button type="button" class="btn-close"
-                                                                            data-bs-dismiss="modal"
-                                                                            aria-label="Close"></button>
-                                                                    </div>
-                                                                    <div class="modal-body"
-                                                                        style="width: 100% !important; height: 80vh; overflow: scroll;">
-                                                                        <form_tab />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                                        <form_tab :mails="mails" />
                                                     </div>
                                                     <div>
                                                         <button><i class="fa fa-trash ml-5"></i>
@@ -291,7 +267,7 @@
 
 <script setup>
 import sidenav from '../components/sidenav.vue';
-import form_tab from '../components/form.vue';
+import form_tab from '../components/formtab.vue';
 import mail_import from '../components/mailimport.vue';
 import mail_text_import from '../components/mailimporttext.vue';
 import editmailtext from '../components/editmailtext.vue';

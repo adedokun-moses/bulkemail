@@ -20,7 +20,7 @@
                             <h5>
                                 Contact Groups <span style="color:  #989898;"><br>
                                 </span></h5>
-                            <h4>30</h4>
+                            <h4>{{ mail_groups.length }}</h4>
                         </div>
 
 
@@ -169,12 +169,17 @@
 <script setup >
 import sidenav from '../components/sidenav.vue';
 import form_tab from '../components/form.vue';
-import mail_text_import from '../components/mailimporttext.vue';
+/* import mail_text_import from '../components/mailimporttext.vue';
 import mail_import from '../components/mailimport.vue';
-import sms_import from '../components/smsimport.vue';
-
+import sms_import from '../components/smsimport.vue'; */
 import router from '@/router';
+import { computed, onMounted } from 'vue';
+import { useStore } from 'vuex'
+const store = useStore()
 
+const mail_groups = computed(() => {
+    return store.state.mailModule.email_groups;
+});
 const group_push = () => {
     router.push('/groups')
 };

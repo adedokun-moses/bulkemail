@@ -98,6 +98,12 @@
                                                         style="padding-left: 10px !important;"></i> View
                                                     Mails</button>
                                             </td>
+                                            <td class="edit_btn" @click="procedtoMesDet(mails.group_id)">
+                                                
+                                                <button class="btn"><i class="fa fa-eye"
+                                                        style="padding-left: 10px !important;"></i> View
+                                                    Messages</button>
+                                            </td>
                                             <td>
                                                 <button class="btn">
                                                     <editmailtext :mails="mails" />
@@ -138,6 +144,9 @@ const procedtoMailDet = (id) =>{
     router.push("/mailsdet/" + id)
 }
  
+const procedtoMesDet =(id) =>{
+    router.push("/messages/" + id)
+}
 
 
 
