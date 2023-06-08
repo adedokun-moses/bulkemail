@@ -320,7 +320,7 @@ form {
     }
 
     .mobile {
-        display: block;
+        display: none;
     }
 
     .user_info {

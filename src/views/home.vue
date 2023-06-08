@@ -13,7 +13,6 @@
                                 <span style="color:  #989898;"></span>
                             </h5>
                             <h4>3000</h4>
-                            <!--   <img src="../assets/f.png" alt="" class="mt-5" style="margin-left: 15px;"> -->
                         </div>
 
                         <div class=" design_tab" @click="group_push()" style="cursor: pointer;">
@@ -72,8 +71,11 @@
 
                     <div class="col-sm-11 mx-auto ">
                         <h5 class="mt-4"><b>Reports</b></h5>
+                        <div v-show="reports.length == 0" class="loader">
+                            <loader />
+                        </div>
                         <div class="report_tab">
-                            <ul v-for="reportdet in reports" :key="reportdet.id">
+                            <ul v-for="reportdet in reports" :key="reportdet.id" v-show="reports.length != 0">
                                 <li>{{ reportdet.report_message }}</li>
                             </ul>
                         </div>
@@ -89,6 +91,7 @@
 <script setup >
 import sidenav from '../components/sidenav.vue';
 import form_tab from '../components/form.vue';
+import loader from '../components/loader.vue';
 /* import mail_text_import from '../components/mailimporttext.vue';
 import mail_import from '../components/mailimport.vue';
 import sms_import from '../components/smsimport.vue'; */
@@ -115,43 +118,6 @@ onMounted(() => {
 
 
 <style scoped>
-.home {
-    background: red;
-    height: 100vh;
-    overflow: auto;
-    overflow: -moz-scrollbars-none;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-    margin: 0px;
-    padding: 0px;
-    -ms-overflow-style: none !important;
-    /* for Internet Explorer, Edge */
-    width: 100%;
-}
-
-.home_page {
-    background: red;
-    height: 100vh;
-    overflow: auto;
-    overflow: -moz-scrollbars-none;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-    margin: 0px;
-    padding: 0px;
-    -ms-overflow-style: none !important;
-    /* for Internet Explorer, Edge */
-    width: 100%;
-}
-
-
-.home::-webkit-scrollbar {
-    display: none;
-}
-
-.home_page::-webkit-scrollbar {
-    display: none;
-}
-
 .report_tab {
     height: 450px;
     overflow: scroll;
@@ -256,22 +222,16 @@ span {
 @media only screen and (max-width: 600px) {
     .design_plat {
         flex-direction: column;
-
     }
 
     .design_plat>div {
-        margin: 0px;
-        padding: 0px;
-        width: 100%;
+        width: 90%;
         height: 130px;
-        margin: 0px 10px;
+        margin: 20px 10px;
         background: #FFFFFF;
         box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.08);
         border-radius: 12px;
     }
 
-    .table_head {
-        display: none;
-    }
-
-}</style>
+}
+</style>

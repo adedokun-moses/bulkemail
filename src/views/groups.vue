@@ -1,12 +1,12 @@
 <template>
-    <div class="container-fluid ">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-sm-2">
                 <sidenav />
             </div>
             <div class="col-sm-10 ">
                 <div class="row">
-                    <div class="col-sm-11 mx-auto">
+                    <div class="col-sm-11 mx-auto m-0 p-0">
                         <h5 class="mt-4"><b>Group Management</b></h5>
                         <div class="row">
                             <div class="col-sm-12 design_plat m-0 p-0 mt-3">
@@ -23,7 +23,7 @@
                                     <h5>
                                         Contact Groups <span style="color:  #989898;"><br>
                                         </span></h5>
-                                    <h4>30</h4>
+                                    <h4>{{ mail_groups.length }}</h4>
                                 </div>
 
                                 <!--     <div class=" design_tab ">
@@ -52,9 +52,9 @@
                             <div class="col-sm-12 group_tab">
                                 <div class="row mt-5">
                                     <div v-show="mail_groups.length == 0" class="loader">
-                                        <loader/>
+                                        <loader />
                                     </div>
-                                    <div class="col-sm-4 " v-for="mails in mail_groups" :key="mails.group_name"
+                                    <div class="col-sm-4 col-12" v-for="mails in mail_groups" :key="mails.group_name"
                                         v-show="mail_groups.length != 0">
                                         <div class="row">
                                             <section class="movie_display col-sm-11  mx-auto">
@@ -76,7 +76,8 @@
                                                         <form_tab :mails="mails" />
                                                     </div>
                                                     <div>
-                                                        <button @click="deleteGroup(mails.group_id)"><i class="fa fa-trash ml-5"></i>
+                                                        <button @click="deleteGroup(mails.group_id)"><i
+                                                                class="fa fa-trash ml-5"></i>
                                                             Delete</button>
                                                     </div>
 
@@ -291,12 +292,12 @@ const deleteGroup = (id) => {
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes!!!!'
-      }).then((result) => {
+    }).then((result) => {
         if (result.isConfirmed) {
             store.dispatch("deletegrp", id);
         }
         else {
-          router.push('/groups')
+            router.push('/groups')
         }
     })
 }
@@ -322,6 +323,7 @@ onMounted(() => {
     scrollbar-width: none;
     -ms-overflow-style: none !important;
 }
+
 .group_tab::-webkit-scrollbar {
     display: none;
 }
@@ -333,6 +335,7 @@ onMounted(() => {
     border: 1px solid gold;
     margin: 5px 0px;
 }
+
 .image_tab {
     height: 60px;
     overflow: hidden;
@@ -340,6 +343,7 @@ onMounted(() => {
     align-items: center;
 
 }
+
 .content {
     display: flex;
     align-items: center;
@@ -351,6 +355,7 @@ onMounted(() => {
     width: 100%;
     margin: 28px 0px 0px 5px;
 }
+
 .image_tab button {
     width: 100%;
     background: grey;
@@ -359,6 +364,7 @@ onMounted(() => {
     border-radius: 2px;
 
 }
+
 .design_plat {
     justify-content: space-between;
     display: flex;
@@ -392,4 +398,54 @@ onMounted(() => {
     text-align: center;
 }
 
-</style>
+@media only screen and (max-width: 600px) {
+    .design_plat {
+        flex-direction: column;
+    }
+
+    .design_plat>div {
+        width: 90%;
+        height: 130px;
+        margin: 20px 10px;
+        background: #FFFFFF;
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.08);
+        border-radius: 12px;
+    }
+
+    .design_plat>div {
+        margin: 0px;
+        padding: 0px;
+        width: 90%;
+        height: 130px;
+        margin: 20px 30px;
+        background: #FFFFFF;
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.08);
+        border-radius: 12px;
+    }
+
+    .design_tab h4 {
+        font-size: 20px;
+        width: 50%;
+        margin: 25px auto;
+        border: 2px solid black;
+        border-radius: 30px;
+        padding: 15px;
+        text-align: center;
+    }
+
+
+    .movie_display {
+    height: auto;
+    overflow: hidden;
+    border-radius: 10px;
+    border: 1px solid gold;
+    margin: 20px 30px;
+}
+
+
+
+
+
+
+
+}</style>

@@ -22,7 +22,6 @@ const signin = {
                             title: "OOPS!",
                             text: res.data.message,
                             icon: "error",
-
                         });
                     } else {
                         sessionStorage.setItem("token", JSON.stringify(res.data.token));

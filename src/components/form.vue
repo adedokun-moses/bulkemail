@@ -184,4 +184,12 @@ form {
 .icon-content:focus~.icon {
     color: #f857a8;
 }
+
+@media only screen and (max-width: 600px) {
+
+
+
+
+
+}
 </style>

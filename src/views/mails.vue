@@ -23,7 +23,7 @@
                                     <h5>
                                         Contact Groups <span style="color:  #989898;"><br>
                                         </span></h5>
-                                    <h4>30</h4>
+                                    <h4>{{ mail_groups.length }}</h4>
                                 </div>
 
 

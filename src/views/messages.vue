@@ -30,7 +30,7 @@
                             </tr>
                             <tr v-for="mails in group_email_message" :key="mails.id"
                                 v-show="group_email_message.length != 0">
-                                <td>{{ mails.message_body.substr(0, 10) }}</td>
+                                <td>{{ mails.message_body.substr(0, 30) }}</td>
                                 <td>{{ formatDateTime(mails.created_at) }}</td>
                                 <td class="success">Successful</td>
                             </tr>
