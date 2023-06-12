@@ -80,7 +80,7 @@
                                             <div class="content">
                                                 <span class="stars"></span>
                                                 <h2 class="java">Send Instantly</h2>
-                                                <p class="java"> Click on send message at the right hand side of the webpage. Select your recipiants, craft your messages and hit the send button.  
+                                                <p class="java"> Click on send message at the right hand side of the webpage or click on quick compose. Select your recipiants, craft your messages and hit the send button.  
                                                 </p>
                                             </div>
                                         </div>
@@ -191,7 +191,7 @@ onMounted(() => {
 
 <style scoped>
 .report_tab {
-    height: 450px;
+    max-height: 450px;
     overflow: scroll;
     overflow: -moz-scrollbars-none;
     -ms-overflow-style: none;
@@ -204,6 +204,7 @@ onMounted(() => {
 
 .report_tab li {
     list-style: none;
+    border-bottom: 2px solid grey;
 }
 
 .icon-container {

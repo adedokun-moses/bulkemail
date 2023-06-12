@@ -27,7 +27,7 @@ const signin = {
                         sessionStorage.setItem("token", JSON.stringify(res.data.token));
                         sessionStorage.setItem("fullname", JSON.stringify(res.data.user.fullname));
                         sessionStorage.setItem("email", JSON.stringify(res.data.user.email));
-                        router.push("/dash");
+                        router.push("/");
                         Swal.fire({
                             title: "Success",
                             text: res.data.message,

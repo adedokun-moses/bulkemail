@@ -15,7 +15,7 @@
         <ul>
             <li><b>Menu</b></li>
             <router-link to="/dash">
-                <li><i class="fa fa-bar-chart" style="margin-right: 20px !important; "></i>Reports</li>
+                <li><i class="fa fa-bar-chart" style="margin-right: 20px !important; "></i>Dashboard</li>
             </router-link>
 
             <router-link to="/groups">
@@ -30,7 +30,7 @@
                 <li><i class="fas fa-user" style="margin-right: 20px !important; "></i>Edit Profile</li>
             </router-link>
 
-            <li @click="logOut()"><i class="fa fa-sign-out " style="margin-right: 20px !important; "></i>Log Out</li>
+            <li @click="logOut()" style="cursor: pointer;"><i class="fa fa-sign-out " style="margin-right: 20px !important; "></i>Log Out</li>
 
         </ul>
 
@@ -116,7 +116,7 @@
             <ul>
                 <li><b>Menu</b></li>
                 <router-link to="/dash">
-                    <li><i class="fa fa-bar-chart" style="margin-right: 20px !important; "></i>Reports</li>
+                    <li><i class="fa fa-bar-chart" style="margin-right: 20px !important; "></i>Dashboard</li>
                 </router-link>
 
                 <router-link to="/groups">
@@ -202,6 +202,7 @@
 import form_tab from '../components/form.vue'
 import { useStore } from 'vuex'
 import { ref } from 'vue';
+import router from '@/router';
 const store = useStore()
 const fullname = JSON.parse(sessionStorage.getItem("fullname"));
 const email = JSON.parse(sessionStorage.getItem("email"))

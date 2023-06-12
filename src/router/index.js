@@ -3,8 +3,8 @@ import HomeView from '../views/index.vue'
 
 const routes = [
   {
-    path: '/',
-    name: 'home',
+    path: '/login',
+    name: 'login',
     component: HomeView
   },
   {
@@ -13,7 +13,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
   },
   {
-    path: '/dash',
+    path: '/',
     name: 'homepage',
     component: () => import(/* webpackChunkName: "about" */ '../views/home.vue'),
     meta: { requiresAuth: true }
@@ -50,6 +50,7 @@ const routes = [
   },
 ]
 
+
 const router = createRouter({
   history: createWebHashHistory(process.env.BASE_URL),
   scrollBehavior(to, from, savedPosition) {
@@ -61,14 +62,19 @@ const router = createRouter({
   },
   routes
 })
-router.beforeEach((to) => {
+router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth && !sessionStorage.getItem("token")) {
     sessionStorage.clear()
-    return {
-      name: "home",
-      query: { redirect: to.fullPath },
-    }
+    next('/login');
+    /*  return {
+       name: "login",
+       query: { redirect: to.fullPath },
+     } */
+  } else {
+    next();
   }
 })
+
+
 
 export default router

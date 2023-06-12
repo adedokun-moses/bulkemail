@@ -105,7 +105,7 @@
                                                         style="padding-left: 10px !important;"></i> View
                                                     Messages</button>
                                             </td>
-                                            <td>
+                                            <td class="edit_btn">
                                                 <button class="btn">
                                                     <editmailtext :mails="mails" />
                                                 </button>
