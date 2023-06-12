@@ -1,5 +1,5 @@
 <template>
-    <button @click="openModal()"><i class="fa fa-envelope"></i> Mail </button>
+    <button @click="openModal()"><i class="fa fa-envelope"></i> Mail  </button>
     <!-- The Modal -->
     <div class="modal" id="myModal" v-if="modal == true">
         <!-- Modal content -->

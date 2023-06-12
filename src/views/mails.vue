@@ -10,22 +10,23 @@
                         <h5 class="mt-4"><b>Mails Management</b></h5>
                         <div class="row">
                             <div class="col-sm-12 design_plat m-0 p-0 mt-3">
-
-                                <div class=" design_tab ">
-                                    <h5> <i class="fa fa-envelope"> Contacts </i>
-                                        <span style="color:  #989898;"></span>
-                                    </h5>
-                                    <h4>3000</h4>
-                                    <!--   <img src="../assets/f.png" alt="" class="mt-5" style="margin-left: 15px;"> -->
-                                </div>
-
                                 <div class=" design_tab" @click="group_push()" style="cursor: pointer;">
                                     <h5>
-                                        Contact Groups <span style="color:  #989898;"><br>
+                                        Email Groups <span style="color:  #989898;"><br>
                                         </span></h5>
                                     <h4>{{ mail_groups.length }}</h4>
                                 </div>
 
+
+                                <div class=" design_tab ">
+                                    <h5>Email Contacts 
+                                        <span style="color:  #989898;"></span>
+                                    </h5>
+                                    <h4>{{totalEmailAddresses}}</h4>
+                                    <!--   <img src="../assets/f.png" alt="" class="mt-5" style="margin-left: 15px;"> -->
+                                </div>
+
+                             
 
                                 <!--   <div class=" design_tab ">
                                     <h5> Import New <br> Emails <span style="color:  #989898; "><br>
@@ -136,9 +137,15 @@ import router from '@/router';
 import { computed } from 'vue';
 import { useStore } from 'vuex'
 const store = useStore()
-
 const mail_groups = computed(() => {
     return store.state.mailModule.email_groups;
+});
+const totalEmailAddresses = computed(() => {
+    const groupEmailList = store.state.mailModule.email_groups;
+    return groupEmailList.reduce(
+        (total, group) => total + group.group_email_adrs,
+        0
+    );
 });
 const procedtoMailDet = (id) =>{  
     router.push("/mailsdet/" + id)
@@ -147,9 +154,6 @@ const procedtoMailDet = (id) =>{
 const procedtoMesDet =(id) =>{
     router.push("/messages/" + id)
 }
-
-
-
 </script>
 
 

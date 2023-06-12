@@ -10,21 +10,22 @@
                         <h5 class="mt-4"><b>Group Management</b></h5>
                         <div class="row">
                             <div class="col-sm-12 design_plat m-0 p-0 mt-3">
+                                <div class=" design_tab" @click="group_push" style="cursor: pointer;">
+                                    <h5>
+                                        Email Groups <span style="color:  #989898;"><br>
+                                        </span></h5>
+                                    <h4>{{ mail_groups.length }}</h4>
+
+                                </div>
 
                                 <div class=" design_tab ">
-                                    <h5> <i class="fa fa-envelope"> Contacts </i>
+                                    <h5>Email Contacts
                                         <span style="color:  #989898;"></span>
                                     </h5>
-                                    <h4>3000</h4>
+                                    <h4>{{ totalEmailAddresses }}</h4>
                                     <!--   <img src="../assets/f.png" alt="" class="mt-5" style="margin-left: 15px;"> -->
                                 </div>
 
-                                <div class=" design_tab" @click="group_push" style="cursor: pointer;">
-                                    <h5>
-                                        Contact Groups <span style="color:  #989898;"><br>
-                                        </span></h5>
-                                    <h4>{{ mail_groups.length }}</h4>
-                                </div>
 
                                 <!--     <div class=" design_tab ">
                                     <h5> Import New <br> Contacts <span style="color:  #989898; "><br>
@@ -275,15 +276,27 @@ import editmailtext from '../components/editmailtext.vue';
 import Swal from 'sweetalert2';
 import loader from '../components/loader.vue';
 import router from '@/router';
-
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, reactive } from 'vue';
 const loading = () => ref(true)
-import { useStore } from 'vuex'
+import { useStore } from 'vuex';
+
+
 const store = useStore()
 
 const mail_groups = computed(() => {
     return store.state.mailModule.email_groups;
 });
+const totalEmailAddresses = computed(() => {
+    const groupEmailList = store.state.mailModule.email_groups;
+    return groupEmailList.reduce(
+        (total, group) => total + group.group_email_adrs,
+        0
+    );
+});
+
+
+
+
 const deleteGroup = (id) => {
     Swal.fire({
         text: "Do You Want To Delete",
@@ -303,6 +316,7 @@ const deleteGroup = (id) => {
 }
 onMounted(() => {
     store.dispatch('fetchAllGroups');
+   // calculateTotalEmailAddresses();
 });
 
 
@@ -435,17 +449,18 @@ onMounted(() => {
 
 
     .movie_display {
-    height: auto;
-    overflow: hidden;
-    border-radius: 10px;
-    border: 1px solid gold;
-    margin: 20px 30px;
+        height: auto;
+        overflow: hidden;
+        border-radius: 10px;
+        border: 1px solid gold;
+        margin: 20px 30px;
+    }
+
+
+
+
+
+
+
 }
-
-
-
-
-
-
-
-}</style>
+</style>

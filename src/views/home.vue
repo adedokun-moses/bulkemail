@@ -7,19 +7,18 @@
             <div class="col-sm-10 ">
                 <div class="row">
                     <div class="col-sm-12 design_plat m-0 p-0 mt-3">
-
-                        <div class=" design_tab ">
-                            <h5> <i class="fa fa-envelope"> Contacts </i>
-                                <span style="color:  #989898;"></span>
-                            </h5>
-                            <h4>3000</h4>
-                        </div>
-
                         <div class=" design_tab" @click="group_push()" style="cursor: pointer;">
                             <h5>
-                                Contact Groups <span style="color:  #989898;"><br>
+                                Email Groups <span style="color:  #989898;"><br>
                                 </span></h5>
                             <h4>{{ mail_groups.length }}</h4>
+                        </div>
+
+                        <div class=" design_tab ">
+                            <h5>Email Contacts
+                                <span style="color:  #989898;"></span>
+                            </h5>
+                            <h4>{{ totalEmailAddresses }}</h4>
                         </div>
 
 
@@ -69,16 +68,82 @@
                         </div>
                     </div>
 
-                    <div class="col-sm-11 mx-auto ">
-                        <h5 class="mt-4"><b>Reports</b></h5>
-                        <div v-show="reports.length == 0" class="loader">
-                            <loader />
+                    <div class="col-sm-12 mx-auto ">
+                        <div class="row">
+                            <div class="col-sm-8 report_dir">
+                               
+                                <h5 class="mt-4 text-center"><b>Send Mail In Four Easy Steps</b></h5>
+                                <div class="container">
+
+                                    <div class="card">
+                                        <div class="face face1">
+                                            <div class="content">
+                                                <span class="stars"></span>
+                                                <h2 class="java">Send Instantly</h2>
+                                                <p class="java"> Click on send message at the right hand side of the webpage. Select your recipiants, craft your messages and hit the send button.  
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="face face2">
+                                            <h2>01</h2>
+                                        </div>
+                                    </div>
+
+                                    <div class="card">
+                                        <div class="face face1">
+                                            <div class="content">
+                                                <span class="stars"></span>
+                                                <h2 class="python">Create Group</h2>
+                                                <p class="python"> Create a specific group for sone mails. These groups can be deleted while new mails can also be added.</p>
+                                            </div>
+                                        </div>
+                                        <div class="face face2">
+                                            <h2>02</h2>
+                                        </div>
+                                    </div>
+
+                                    <div class="card">
+                                        <div class="face face1">
+                                            <div class="content">
+                                                <span class="stars"></span>
+                                                <h2 class="cSharp">Manage Mails</h2>
+                                                <p class="cSharp">Take charge of your mails. View sent mails, all emails attached to a group and more.</p>
+                                            </div>
+                                        </div>
+                                        <div class="face face2">
+                                            <h2>03</h2>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="card">
+                                        <div class="face face1">
+                                            <div class="content">
+                                                <span class="stars"></span>
+                                                <h2 class="js">Manage Profile</h2>
+                                                <p class="js">As an admin, you can manage your user profile. Create new user, add user and perform other funtion.</p>
+                                            </div>
+                                        </div>
+                                        <div class="face face2">
+                                            <h2>04</h2>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-sm-4">
+                                <h5 class="mt-4"><b>Reports</b></h5>
+                                <div v-show="reports.length == 0" class="loader">
+                                    <loader />
+                                </div>
+                                <div class="report_tab">
+                                    <ul v-for="reportdet in reports" :key="reportdet.id" v-show="reports.length != 0">
+                                        <li>{{ reportdet.report_message }}</li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
-                        <div class="report_tab">
-                            <ul v-for="reportdet in reports" :key="reportdet.id" v-show="reports.length != 0">
-                                <li>{{ reportdet.report_message }}</li>
-                            </ul>
-                        </div>
+
 
                     </div>
                 </div>
@@ -106,6 +171,13 @@ const mail_groups = computed(() => {
 
 const reports = computed(() => {
     return store.state.mailModule.report;
+});
+const totalEmailAddresses = computed(() => {
+    const groupEmailList = store.state.mailModule.email_groups;
+    return groupEmailList.reduce(
+        (total, group) => total + group.group_email_adrs,
+        0
+    );
 });
 const group_push = () => {
     router.push('/groups')
@@ -139,7 +211,6 @@ onMounted(() => {
     flex-direction: column;
     align-content: center;
 }
-
 
 .design_plat {
     justify-content: space-between;
@@ -182,50 +253,119 @@ onMounted(() => {
     width: 80%;
 }
 
-.pull-left {
+
+.container {
+    max-width: 100vw;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 35px;
+    margin: 0 auto;
+    padding: 30px 0;
+    cursor: pointer;
+}
+
+body .container .card {
+    position: relative;
+    width: 300px;
+    height: 180px;
+    margin: 0 auto;
+    background: #000;
+    border-radius: 15px;
+    box-shadow: 0 15px 60px rgba(0, 0, 0, 0.5);
+}
+
+body .container .card .face {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     display: flex;
+    justify-content: center;
     align-items: center;
 }
 
-span {
-    padding-top: 0px;
+body .container .card .face.face1 {
+    box-sizing: border-box;
+    padding: 20px;
 }
 
-.table_head {
-    display: flex;
-    justify-content: space-between;
-    box-shadow: 1px 1px #888888;
-    background: #989898;
-    padding: 5px 2px;
-    border-radius: 3px;
-
+body .container .card .face.face1 h2 {
+    margin: 0;
+    padding: 0;
 }
 
-.table_head>div {
-    align-items: center;
+body .container .card .face.face1 .java {
+    background-color: #fff;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
-.table_head button {
-    margin: 0px 10px !important;
-    padding: 10px 25px !important;
-    outline: none;
-    border: none;
-    border-radius: 10px;
+body .container .card .face.face1 .python {
+    background-color: #fff;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
-.filter_box input {
-    padding: 8px 10px !important;
-    border-radius: 5px;
-    outline: none;
+body .container .card .face.face1 .cSharp {
+    background-color: #fff;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+body .container .card .face.face1 .js {
+    background-color: #ebe4eb;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+
+body .container .card .face.face2 {
+    transition: 0.5s;
+}
+
+body .container .card .face.face2 h2 {
+    margin: 0;
+    padding: 0;
+    font-size: 10em;
+    color: #fff;
+    transition: 0.5s;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+}
+
+body .container .card:hover .face.face2 {
+    height: 15px;
+}
+
+body .container .card:hover .face.face2 h2 {
+    font-size: 2em;
+}
+
+body .container .card:nth-child(1) .face.face2 {
+    background-image: linear-gradient(40deg, #fffc00 0%, #fc00ff 45%, #00fffc 100%);
+    border-radius: 15px;
+}
+
+body .container .card:nth-child(2) .face.face2 {
+    background-image: linear-gradient(40deg, #fc00ff 0%, #00fffc 45%, #fffc00 100%);
+    border-radius: 15px;
+}
+
+body .container .card:nth-child(3) .face.face2 {
+    background-image: linear-gradient(40deg, #00fffc 0%, #fc00ff 45%, #fffc00 100%);
+    border-radius: 15px;
+}
+body .container .card:nth-child(4) .face.face2 {
+    background-image: linear-gradient(40deg, #00fffc 0%, #fc00ff 45%, #fffc00 100%);
+    border-radius: 15px;
 }
 
 @media only screen and (max-width: 600px) {
     .design_plat {
         flex-direction: column;
     }
-
     .design_plat>div {
-        width: 90%;
+        width: 100%;
         height: 130px;
         margin: 20px 10px;
         background: #FFFFFF;
@@ -234,4 +374,5 @@ span {
     }
 
 }
+
 </style>
