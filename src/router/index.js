@@ -1,9 +1,9 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/index.vue'
 
 const routes = [
   {
-    path: '/login',
+    path: '/index',
     name: 'login',
     component: HomeView
   },
@@ -48,33 +48,28 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/messages.vue'),
     meta: { requiresAuth: true }
   },
+  {
+    path: '/unsub',
+    name: 'unsubscribe',
+    component: () => import(/* webpackChunkName: "about" */ '../views/unsub.vue'),
+    meta: { requiresAuth: true }
+  },
 ]
 
 
 const router = createRouter({
-  history: createWebHashHistory(process.env.BASE_URL),
-  scrollBehavior(to, from, savedPosition) {
-    if (savedPosition) {
-      return savedPosition
-    } else {
-      return { top: 0 }
-    }
-  },
+  history: createWebHistory(process.env.BASE_URL),
   routes
 })
-router.beforeEach((to, from, next) => {
-  if (to.meta.requiresAuth && !sessionStorage.getItem("token")) {
-    sessionStorage.clear()
-    next('/login');
-    /*  return {
-       name: "login",
-       query: { redirect: to.fullPath },
-     } */
-  } else {
-    next();
+
+router.beforeEach((to)=>{
+  if(to.meta.requiresAuth && !sessionStorage.getItem("token")){
+      sessionStorage.clear()
+      return{
+          name:"login",
+          query:{redirect:to.fullPath},
+      }
   }
 })
-
-
 
 export default router

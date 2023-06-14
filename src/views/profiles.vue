@@ -172,4 +172,22 @@ import sidenav from '../components/sidenav.vue';
 
 .table::-webkit-scrollbar {
     display: none;
-}</style>
+}
+
+@media only screen and (min-width: 481px max-width: 768px) {
+    .design_plat {
+        flex-direction: column;
+    }
+
+    .design_plat>div {
+        width: 100%;
+        height: 130px;
+        margin: 20px 10px;
+        background: #FFFFFF;
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.08);
+        border-radius: 12px;
+    }
+
+}
+
+</style>

@@ -54,6 +54,7 @@ const signin = {
                 icon: "success",
             });
             sessionStorage.clear();
+            location.reload()
         },
 
         /*   FORGET_PASSWORD(state, params) {

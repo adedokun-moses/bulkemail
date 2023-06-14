@@ -1,12 +1,12 @@
 <template>
-    <div class="container-fluid ">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-sm-2">
                 <sidenav />
             </div>
             <div class="col-sm-10 ">
                 <div class="row">
-                    <div class="col-sm-12 design_plat m-0 p-0 mt-3">
+                    <div class="col-sm-12 design_plat  mt-3">
                         <div class=" design_tab" @click="group_push()" style="cursor: pointer;">
                             <h5>
                                 Email Groups <span style="color:  #989898;"><br>
@@ -71,7 +71,7 @@
                     <div class="col-sm-12 mx-auto ">
                         <div class="row">
                             <div class="col-sm-8 report_dir">
-                               
+
                                 <h5 class="mt-4 text-center"><b>Send Mail In Four Easy Steps</b></h5>
                                 <div class="container">
 
@@ -80,7 +80,9 @@
                                             <div class="content">
                                                 <span class="stars"></span>
                                                 <h2 class="java">Send Instantly</h2>
-                                                <p class="java"> Click on send message at the right hand side of the webpage or click on quick compose. Select your recipiants, craft your messages and hit the send button.  
+                                                <p class="java"> Click on send message at the right hand side of the webpage
+                                                    or click on quick compose. Select your recipiants, craft your messages
+                                                    and hit the send button.
                                                 </p>
                                             </div>
                                         </div>
@@ -94,7 +96,8 @@
                                             <div class="content">
                                                 <span class="stars"></span>
                                                 <h2 class="python">Create Group</h2>
-                                                <p class="python"> Create a specific group for sone mails. These groups can be deleted while new mails can also be added.</p>
+                                                <p class="python"> Create a specific group for sone mails. These groups can
+                                                    be deleted while new mails can also be added.</p>
                                             </div>
                                         </div>
                                         <div class="face face2">
@@ -107,7 +110,8 @@
                                             <div class="content">
                                                 <span class="stars"></span>
                                                 <h2 class="cSharp">Manage Mails</h2>
-                                                <p class="cSharp">Take charge of your mails. View sent mails, all emails attached to a group and more.</p>
+                                                <p class="cSharp">Take charge of your mails. View sent mails, all emails
+                                                    attached to a group and more.</p>
                                             </div>
                                         </div>
                                         <div class="face face2">
@@ -121,7 +125,8 @@
                                             <div class="content">
                                                 <span class="stars"></span>
                                                 <h2 class="js">Manage Profile</h2>
-                                                <p class="js">As an admin, you can manage your user profile. Create new user, add user and perform other funtion.</p>
+                                                <p class="js">As an admin, you can manage your user profile. Create new
+                                                    user, add user and perform other funtion.</p>
                                             </div>
                                         </div>
                                         <div class="face face2">
@@ -313,6 +318,7 @@ body .container .card .face.face1 .cSharp {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+
 body .container .card .face.face1 .js {
     background-color: #ebe4eb;
     -webkit-background-clip: text;
@@ -356,15 +362,33 @@ body .container .card:nth-child(3) .face.face2 {
     background-image: linear-gradient(40deg, #00fffc 0%, #fc00ff 45%, #fffc00 100%);
     border-radius: 15px;
 }
+
 body .container .card:nth-child(4) .face.face2 {
     background-image: linear-gradient(40deg, #00fffc 0%, #fc00ff 45%, #fffc00 100%);
     border-radius: 15px;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 480px) {
     .design_plat {
         flex-direction: column;
     }
+
+    .design_plat>div {
+        width: 100%;
+        height: 130px;
+        margin: 20px 0px;
+        background: #FFFFFF;
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.08);
+        border-radius: 12px;
+    }
+
+}
+/* 
+@media only screen and (min-width: 481px max-width: 768px) {
+    .design_plat {
+        flex-direction: column;
+    }
+
     .design_plat>div {
         width: 100%;
         height: 130px;
@@ -374,6 +398,11 @@ body .container .card:nth-child(4) .face.face2 {
         border-radius: 12px;
     }
 
-}
+} */
+
+
+
+
+
 
 </style>

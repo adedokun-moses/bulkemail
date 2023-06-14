@@ -1,7 +1,7 @@
 <template>
     <nav class="desktop">
         <div class="user_info text-center pt-5 ">
-            <router-link to="/dash">
+            <router-link to="/">
                 <div class="img_tab">
                     <img src="../assets/svg.png">
                 </div>
@@ -14,7 +14,7 @@
         </div>
         <ul>
             <li><b>Menu</b></li>
-            <router-link to="/dash">
+            <router-link to="/">
                 <li><i class="fa fa-bar-chart" style="margin-right: 20px !important; "></i>Dashboard</li>
             </router-link>
 
@@ -30,7 +30,8 @@
                 <li><i class="fas fa-user" style="margin-right: 20px !important; "></i>Edit Profile</li>
             </router-link>
 
-            <li @click="logOut()" style="cursor: pointer;"><i class="fa fa-sign-out " style="margin-right: 20px !important; "></i>Log Out</li>
+            <li @click="logOut()" style="cursor: pointer;"><i class="fa fa-sign-out "
+                    style="margin-right: 20px !important; "></i>Log Out</li>
 
         </ul>
 
@@ -126,7 +127,7 @@
                 <router-link to="/mails">
                     <li><i class="fa fa-envelope-open" style="margin-right: 20px !important; "></i>Manage Mails</li>
                 </router-link>
-      
+
 
                 <router-link to="/profiles">
                     <li><i class="fas fa-user" style="margin-right: 20px !important; "></i>Edit Profile</li>
@@ -208,15 +209,16 @@ const fullname = JSON.parse(sessionStorage.getItem("fullname"));
 const email = JSON.parse(sessionStorage.getItem("email"))
 const logOut = () => {
     store.dispatch("logout");
+   
 }
-const mobilemenu =ref(false)
+const mobilemenu = ref(false)
 const open_nav = () => {
     alert('menu')
-    if(mobilemenu.value === ""){
+    if (mobilemenu.value === "") {
         return mobilemenu.value = true
-    } 
-     return mobilemenu.value = ''
-    
+    }
+    return mobilemenu.value = ''
+
 }
 
 </script>
@@ -322,11 +324,27 @@ form {
 
     .mobile {
         display: none;
+
     }
 
     .user_info {
         display: none;
     }
 
+}
+
+@media only screen and (min-device-width: 600px) and (max-device-width: 801px) {
+    .desktop {
+        display: none;
+    }
+
+    .mobile {
+        display: none;
+
+    }
+
+    .user_info {
+        display: none;
+    }
 }
 </style>

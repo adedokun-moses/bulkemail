@@ -6,10 +6,10 @@
             </div>
             <div class="col-sm-10 ">
                 <div class="row">
-                    <div class="col-sm-11 mx-auto m-0 p-0">
+                    <div class="col-sm-11 mx-auto">
                         <h5 class="mt-4"><b>Group Management</b></h5>
                         <div class="row">
-                            <div class="col-sm-12 design_plat m-0 p-0 mt-3">
+                            <div class="col-sm-12 design_plat mt-3">
                                 <div class=" design_tab" @click="group_push" style="cursor: pointer;">
                                     <h5>
                                         Email Groups <span style="color:  #989898;"><br>
@@ -316,7 +316,7 @@ const deleteGroup = (id) => {
 }
 onMounted(() => {
     store.dispatch('fetchAllGroups');
-   // calculateTotalEmailAddresses();
+    // calculateTotalEmailAddresses();
 });
 
 
@@ -412,26 +412,15 @@ onMounted(() => {
     text-align: center;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (min-device-width: 200px) and (max-device-width: 600px) {
     .design_plat {
         flex-direction: column;
     }
 
     .design_plat>div {
-        width: 90%;
+        width: 100%;
         height: 130px;
-        margin: 20px 10px;
-        background: #FFFFFF;
-        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.08);
-        border-radius: 12px;
-    }
-
-    .design_plat>div {
-        margin: 0px;
-        padding: 0px;
-        width: 90%;
-        height: 130px;
-        margin: 20px 30px;
+        margin: 20px 0px;
         background: #FFFFFF;
         box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.08);
         border-radius: 12px;
@@ -456,11 +445,20 @@ onMounted(() => {
         margin: 20px 30px;
     }
 
-
-
-
-
-
-
 }
+
+/* @media only screen and (min-device-width: 600px) and (max-device-width: 801px) {
+    .design_plat {
+        flex-direction: column;
+    }
+
+    .design_plat>div {
+        width: 100%;
+        height: 130px;
+        margin: 20px 0px;
+       
+    }
+
+
+} */
 </style>

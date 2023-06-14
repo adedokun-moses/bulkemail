@@ -1,7 +1,7 @@
 <template>
-  <div class="container-fluid home">
+  <div class="container-fluid ">
     <div class="row">
-      <div class="col-sm-5">
+      <div class="col-sm-5 mobile m-0 p-0">
         <form class="mt-5">
           <h4><i class="fa fa-envelope"></i> Moreplex Mail</h4>
           <h5>Log In</h5>
@@ -51,6 +51,9 @@ const userLogin = () => {
   params.append("email", email.value);
   params.append("password", password.value);
   store.commit("LOG_IN", params);
+  setTimeout(() => {
+    login.value = 'Sign In'
+  }, 5000);
 
 
 }
@@ -59,28 +62,28 @@ const userLogin = () => {
 
 
 <style scoped>
-.home {
-  height: 100vh;
-}
-
 .homepage {
 
   background: rgba(221, 156, 156, 0.8);
   height: 100vh;
   text-align: center;
 }
-.det{
-  margin: 5rem ;
-  
+
+.det {
+  margin: 5rem;
+
 }
-.det img{
+
+.det img {
   width: 100%;
 }
-.det h4{
+
+.det h4 {
   color: #ff0000;
   font-size: 50px;
   font-weight: 800;
 }
+
 form {
   width: 80%;
   margin: auto;
@@ -127,18 +130,34 @@ form h5 {
   float: right;
 }
 
-.homeimg img {
-  display: block;
-  margin: 200px 0px auto auto;
-}
 
 @media only screen and (max-width: 600px) {
-.homepage{
-  display: none;
-}
-.home h4{
-  text-align: center;
-  padding: 10px;
-}
+  form {
+    width: 80%;
+    margin: auto;
+  }
+
+  .mobile {
+    width: 100vmax;
+    margin: 0px !important;
+    padding: 0px !important;
+    height: auto;
+  }
+
+  .home {
+    margin: 0px !important;
+    padding: 0px !important;
+    height: 100vh;
+    background: red;
+  }
+
+  .homepage {
+    display: none;
+  }
+
+  .home h4 {
+    text-align: center;
+    padding: 10px;
+  }
 }
 </style>

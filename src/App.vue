@@ -5,6 +5,10 @@
 
 
 <style>
+* {
+box-sizing: border-box;
+}
+
 body{
   margin: 0px !important;
   padding: 0px !important;
